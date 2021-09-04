@@ -12,6 +12,8 @@ app.use(cors())
 // JSON Body Parser
 app.use(express.json())
 
+app.use('/api/products', require('./routes/products'))
+
 app.listen(PORT, () => {
   console.log(`Server listening to port ${PORT} in ${process.env.NODE_ENV} mode`)
 })
