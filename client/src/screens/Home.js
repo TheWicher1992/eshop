@@ -1,32 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Product from "../components/Product";
-import axios from 'axios'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { getProductList } from '../actions/productActions'
+import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 const Home = () => {
-
-  const [products, setProducts] = useState([])
+  const dispatch = useDispatch()
+  const productList = useSelector(state => state.productList)
+  const { loading, products, error } = productList
+  if (error) toast.error("Something went wrong")
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get(`/api/products`)
-      setProducts(data)
-    }
-    fetchProducts()
-  }, [])
+    dispatch(getProductList())
+  }, [dispatch])
 
   return (
     <div>
-      <h1>Latest Products!</h1>
-      <div className="row">
-        {products.map((product) => (
-          <div
-            key={product._id}
-            className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-          >
-            <Product product={product} />
-          </div>
-        ))}
-      </div>
+      {loading && <h1>Latest Products!</h1>}
+      <Spinner loading={loading} />
+      {error && <div className='text-center'><h2>Oopss, Something fishy happened!</h2></div>}
+      {
+        !loading && <div className="row">
+          {products.map((product) => (
+            <div
+              key={product._id}
+              className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+            >
+              <Product product={product} />
+            </div>
+          ))}
+        </div>
+      }
+
     </div>
   );
 };
