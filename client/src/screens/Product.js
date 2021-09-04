@@ -20,35 +20,35 @@ const Product = ({ match }) => {
         Go back
       </Link>
       <div className="row my-3">
-        <div className="col-6">
+        <div className="col-sm-12 col-md-6 col-lg-6">
           <img src={product.image} className="img-fluid" alt="" />
         </div>
-        <div className="col-3">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
+        <div className="col-sm-12 col-md-6 col-lg-3">
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item">
               <h3>{product.name}</h3>
             </li>
-            <li class="list-group-item">
+            <li className="list-group-item">
               <Rating
                 value={product.rating}
                 text={`${product.numReviews} reviews`}
               />
             </li>
-            <li class="list-group-item">Price: ${product.price}</li>
-            <li class="list-group-item">Description: {product.description}</li>
+            <li className="list-group-item">Price: ${product.price}</li>
+            <li className="list-group-item">Description: {product.description}</li>
           </ul>
         </div>
-        <div className="col-3">
-          <ul class="list-group">
-            <li class="list-group-item">Price: ${product.price}</li>
-            <li class="list-group-item">
+        <div className="col-sm-12 col-md-12 col-lg-3">
+          <ul className="list-group">
+            <li className="list-group-item">Price: ${product.price}</li>
+            <li className="list-group-item">
               Status: {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
             </li>
-            <li class="list-group-item">
-              <div class="d-grid gap-2">
+            <li className="list-group-item">
+              <div className="d-grid gap-2">
                 <button
                   disabled={product.countInStock === 0}
-                  class="btn btn-dark"
+                  className="btn btn-dark"
                   type="button"
                 >
                   Add to Cart
