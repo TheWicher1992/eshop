@@ -1,25 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Rating from "../components/Rating";
-import axios from 'axios'
+import { getProductDetail } from "../actions/productActions";
+import Spinner from "../components/Spinner";
+
 const Product = ({ match }) => {
-  const [product, setProduct] = useState({})
+  const dispatch = useDispatch()
+  const productDetail = useSelector(state => state.productDetail)
+  const { product, error, loading } = productDetail
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      const { data } = await axios.get(`/api/products/${match.params.id}`)
-      setProduct(data)
-    }
-    fetchProduct()
-  }, [match])
-
+    dispatch(getProductDetail(match.params.id))
+  }, [match, dispatch])
 
   return (
     <>
       <Link to="/" className="btn btn-outline-dark">
         Go back
       </Link>
-      <div className="row my-3">
+      <Spinner loading={loading} />
+      {error &&
+        <div className='text-center'>
+          <h2>Oopss, Something fishy happened!</h2>
+        </div>
+      }
+      {!loading && !error && <div className="row my-3">
         <div className="col-sm-12 col-md-6 col-lg-6">
           <img src={product.image} className="img-fluid" alt="" />
         </div>
@@ -58,6 +64,7 @@ const Product = ({ match }) => {
           </ul>
         </div>
       </div>
+      }
     </>
   );
 };

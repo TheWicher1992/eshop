@@ -8,7 +8,6 @@ const Home = () => {
   const dispatch = useDispatch()
   const productList = useSelector(state => state.productList)
   const { loading, products, error } = productList
-  if (error) toast.error("Something went wrong")
 
   useEffect(() => {
     dispatch(getProductList())
@@ -16,7 +15,7 @@ const Home = () => {
 
   return (
     <div>
-      {loading && <h1>Latest Products!</h1>}
+      {!loading && <h1>Latest Products!</h1>}
       <Spinner loading={loading} />
       {error && <div className='text-center'><h2>Oopss, Something fishy happened!</h2></div>}
       {
