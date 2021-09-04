@@ -1,6 +1,10 @@
 #main {
-  min-height: 80vh;
+  min-height: 70vh;
 }
 .rating {
   color: goldenrod;
+}
+
+a {
+  text-decoration: none;
 }

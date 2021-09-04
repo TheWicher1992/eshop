@@ -24,10 +24,10 @@ const Rating = ({ value, text }) => {
   };
 
   return (
-    <div className="rating">
-      <span>{renderRating()}</span>
+    <div >
+      <span className="rating">{renderRating()}</span>
       <span>&nbsp;{text && text}</span>
-    </div>
+    </div >
   );
 };
 
