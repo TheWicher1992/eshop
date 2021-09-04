@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Product from "./screens/Product";
 import Home from "./screens/Home";
 import { ToastContainer } from 'react-toastify';
+import Cart from "./screens/Cart";
 import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <div id="main" className="container my-3">
         <Route exact path='/' component={Home} />
         <Route path='/product/:id' component={Product} />
+        <Route exact path='/cart' component={Cart} />
       </div>
       <Footer />
     </Router>
