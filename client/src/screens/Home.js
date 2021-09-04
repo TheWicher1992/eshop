@@ -3,7 +3,6 @@ import Product from "../components/Product";
 import { useDispatch, useSelector } from 'react-redux'
 import { getProductList } from '../actions/productActions'
 import Spinner from "../components/Spinner";
-import { toast } from "react-toastify";
 const Home = () => {
   const dispatch = useDispatch()
   const productList = useSelector(state => state.productList)
