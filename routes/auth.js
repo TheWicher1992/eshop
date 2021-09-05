@@ -1,9 +1,11 @@
 const express = require('express')
 const router = express.Router()
+const auth = require('../middlewares/auth')
 const Product = require('../models/Product')
 const User = require('../models/User')
-router.get('/', async (req, res) => {
-
+const generateToken = require('../utils/generateToken')
+router.get('/', auth, async (req, res) => {
+  return res.json(req.user)
 })
 
 router.post('/', async (req, res) => {
@@ -20,7 +22,7 @@ router.post('/', async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null
+      token: generateToken(user._id)
     })
 
   } catch (err) {
