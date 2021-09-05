@@ -1,12 +1,86 @@
 const express = require('express')
 const router = express.Router()
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+const axios = require('axios')
 const auth = require('../middlewares/auth')
 const Product = require('../models/Product')
 const User = require('../models/User')
 const generateToken = require('../utils/generateToken')
+
+const verifyFacebookToken = async (accessToken, userId) => {
+  try {
+
+    const fbGraph = `https://graph.facebook.com/${userId}?fields=id,name,email,picture&access_token=${accessToken}`
+    const res = await axios.get(fbGraph)
+
+    return {
+      profile: res.data,
+      status: 'SUCCESS'
+    }
+  } catch (err) {
+    return {
+      status: "FAILIURE",
+    }
+  }
+}
+
+const verifyGoogleToken = async (tokenId) => {
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: tokenId,
+      audience: process.env.GOOGLE_CLIENT_ID
+    })
+    return {
+      status: 'SUCCESS',
+      profile: ticket.getPayload()
+    }
+
+  } catch (err) {
+    return {
+      status: 'FAILIURE'
+    }
+  }
+}
+
+
+
 router.get('/', auth, async (req, res) => {
   return res.json(req.user)
 })
+router.post("/google", async (req, res) => {
+  try {
+    const {
+      tokenId
+    } = req.body
+    const verificationResult = await verifyGoogleToken(tokenId)
+    if (verificationResult.status === 'FAILIURE')
+      return res.status(401).json({ error: 'GOOGLE_UNVERIFIED' })
+  }
+  catch (err) {
+    console.log("error-->", err)
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
+
+router.post('/facebook', async (req, res) => {
+  try {
+    const { accessToken, userID } = req.body
+    const verificationResult = await verifyFacebookToken(accessToken, userID)
+    if (verificationResult.status === 'FAILIURE')
+      return res.status(401).json({ error: 'FACEBOOK_UNVERIFIED' })
+  }
+  catch (err) {
+    console.log("error-->", err)
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
 
 router.post('/', async (req, res) => {
   try {

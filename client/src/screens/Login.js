@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { GOOGLE_CLIENT_ID, FACEBOOK_CLIENT_ID } from "../env.json";
 
 const Login = () => {
   const loginWithGoogle = async (googleData) => {
@@ -41,7 +40,7 @@ const Login = () => {
                 Login
               </button>
               <GoogleLogin
-                clientId={GOOGLE_CLIENT_ID}
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 render={(renderProps) => (
                   <button
                     className="btn btn-outline-dark"
@@ -68,7 +67,7 @@ const Login = () => {
                     Login with Facebook <i className="fab fa-facebook-f"></i>
                   </button>
                 )}
-                appId={FACEBOOK_CLIENT_ID}
+                appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
                 // autoLoad={true}
                 callback={loginWithFacebook}
               />
