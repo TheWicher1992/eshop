@@ -33,21 +33,35 @@ router.post('/', async (req, res) => {
   }
 })
 
-
-router.get('/:id', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
-    const product = await Product.findOne({
-      _id: req.params.id
+    const { name, email, password } = req.body
+    const user = await User.findOne({
+      email
     })
-    if (product) return res.status(200).json(product)
-    else return res.status(404).json({ message: 'Product not found' })
-  } catch (err) {
+
+    if (user) return res.status(400).json({ error: 'USER_EXISTS' })
+
+    const newUser = new User({
+      name, email, password
+    })
+
+    await newUser.save()
+
+    return res.json({
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      isAdmin: newUser.isAdmin,
+      token: generateToken(newUser._id)
+    })
+  }
+  catch (err) {
     console.log("error-->", err)
     return res.status(500).json({
       error: err.message
     })
   }
-
 })
 
 module.exports = router
