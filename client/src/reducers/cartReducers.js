@@ -13,7 +13,10 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
         }
       else return { cartItems: [...state.cartItems, action.payload] }
     case types.CART_REMOVE_ITEM:
-      return state
+      const itemId = action.payload
+      return {
+        cartItems: state.cartItems.filter(item => item.id !== itemId)
+      }
     default:
       return state
   }

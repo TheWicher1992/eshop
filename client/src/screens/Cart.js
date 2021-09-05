@@ -1,12 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
   const handleQuanitity = (id, qty) => {
     dispatch(addToCart(id, qty));
   };
+  const handleRemove = (id) => {
+    dispatch(removeFromCart(id))
+  }
   return (
     <div className="row">
       <h2>Shopping Cart</h2>
@@ -39,7 +42,7 @@ const Cart = () => {
                   </select>
                 </div>
                 <div className="col-2">
-                  <button type="button" className="btn">
+                  <button onClick={() => handleRemove(item.id)} type="button" className="btn">
                     <i style={{ color: "brown" }} className="fas fa-trash"></i>
                   </button>
                 </div>
