@@ -6,6 +6,8 @@ import Home from "./screens/Home";
 import { ToastContainer } from 'react-toastify';
 import Cart from "./screens/Cart";
 import 'react-toastify/dist/ReactToastify.css';
+import Login from "./screens/Login";
+import Register from "./screens/Register";
 function App() {
   return (
     <Router>
@@ -26,6 +28,8 @@ function App() {
         <Route exact path='/' component={Home} />
         <Route path='/product/:id' component={Product} />
         <Route exact path='/cart' component={Cart} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={Register} />
       </div>
       <Footer />
     </Router>

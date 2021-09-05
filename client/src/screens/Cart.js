@@ -13,6 +13,7 @@ const Cart = () => {
   return (
     <div className="row">
       <h2>Shopping Cart</h2>
+      {cartItems.length === 0 && <h1 style={{ color: "brown" }}>Your Cart is empty</h1>}
       <div className="col-8">
         <ul class="list-group list-group-flush">
           {cartItems.map((item) => (
