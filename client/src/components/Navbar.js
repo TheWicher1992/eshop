@@ -1,6 +1,9 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 const Navbar = () => {
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+  const dispatch = useDispatch()
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
@@ -13,13 +16,18 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/cart"><i className="fas fa-shopping-cart"></i>&nbsp;Cart</Link>
             </li>
-            <li className="nav-item">
+            {!isAuthenticated && <li className="nav-item">
               <Link className="nav-link active" to="/login"><i className="fas fa-user"></i>&nbsp;Sign In</Link>
-            </li>
+            </li>}
+            {isAuthenticated && <li className="nav-item">
+              <Link to="/" onClick={() => dispatch({
+                type: 'LOGOUT'
+              })} className="nav-link active"><i class="fas fa-sign-out-alt"></i>&nbsp;Log Out</Link>
+            </li>}
           </ul>
         </div>
       </div>
-    </nav>
+    </nav >
   )
 }
 

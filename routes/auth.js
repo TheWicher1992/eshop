@@ -7,6 +7,7 @@ const auth = require('../middlewares/auth')
 const Product = require('../models/Product')
 const User = require('../models/User')
 const generateToken = require('../utils/generateToken')
+const { response } = require('express')
 
 const verifyFacebookToken = async (accessToken, userId) => {
   try {
@@ -56,6 +57,28 @@ router.post("/google", async (req, res) => {
     const verificationResult = await verifyGoogleToken(tokenId)
     if (verificationResult.status === 'FAILIURE')
       return res.status(401).json({ error: 'GOOGLE_UNVERIFIED' })
+    console.log(verificationResult.profile)
+    const googleProfile = verificationResult.profile
+    let user = await User.findOne({ email: googleProfile.email })
+    if (!user) {
+      user = await User.create({
+        name: googleProfile.name,
+        email: googleProfile.email,
+        password: ''
+      })
+    }
+
+    const response = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id)
+    }
+    console.log(response)
+
+    return res.json(response)
+
   }
   catch (err) {
     console.log("error-->", err)
@@ -72,6 +95,30 @@ router.post('/facebook', async (req, res) => {
     const verificationResult = await verifyFacebookToken(accessToken, userID)
     if (verificationResult.status === 'FAILIURE')
       return res.status(401).json({ error: 'FACEBOOK_UNVERIFIED' })
+
+    const facebookProfile = verificationResult.profile
+
+    console.log(facebookProfile)
+
+    let user = await User.findOne({ email: facebookProfile.email })
+    if (!user) {
+      user = await User.create({
+        name: facebookProfile.name,
+        email: facebookProfile.email,
+        password: ''
+      })
+    }
+
+    const response = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id)
+    }
+    console.log(response)
+
+    return res.json(response)
   }
   catch (err) {
     console.log("error-->", err)

@@ -8,3 +8,14 @@
 a {
   text-decoration: none;
 }
+
+#login-form input {
+  border-color: black;
+  border: solid 1px;
+}
+
+.fb-login:after {
+  font-family: "Font Awesome 5 Brands";
+  font-weight: 900;
+  content: " \f39e";
+}
