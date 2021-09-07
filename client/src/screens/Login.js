@@ -34,7 +34,7 @@ const Login = ({ history }) => {
   return (
     <div className="container">
       <div className="row justify-content-center align-items-center">
-        <div className="col-xs-12 col-md-6 p-4">
+        <div className="col-xs-12 col-md-6 p-3">
           <div className="text-center">
             <i className="fas fa-user fa-4x p-5"></i>
           </div>

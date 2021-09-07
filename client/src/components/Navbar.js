@@ -20,9 +20,9 @@ const Navbar = () => {
               <Link className="nav-link active" to="/login"><i className="fas fa-user"></i>&nbsp;Sign In</Link>
             </li>}
             {isAuthenticated && <li className="nav-item">
-              <Link to="/" onClick={() => dispatch({
+              <Link to="" onClick={() => dispatch({
                 type: 'LOGOUT'
-              })} className="nav-link active"><i class="fas fa-sign-out-alt"></i>&nbsp;Log Out</Link>
+              })} className="nav-link active"><i className="fas fa-sign-out-alt"></i>&nbsp;Log Out</Link>
             </li>}
           </ul>
         </div>
