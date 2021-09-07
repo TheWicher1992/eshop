@@ -26,7 +26,7 @@ const Cart = () => {
                   <h6>{item.name}</h6>
                 </div>
                 <div className="col-2">${item.price}</div>
-                <div className="col-2 col-md-3">
+                <div className="col-2">
                   <select
                     className="form-select"
                     aria-label="Default select example"
@@ -61,7 +61,7 @@ const Cart = () => {
             </h3>
           </li>
           <li className="list-group-item">
-            ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)}
+            ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
           </li>
           <li className="list-group-item">
             <div className="d-grid gap-2">

@@ -7,8 +7,7 @@ const auth = require('../middlewares/auth')
 const Product = require('../models/Product')
 const User = require('../models/User')
 const generateToken = require('../utils/generateToken')
-const { response } = require('express')
-
+const sendMail = require('../utils/mailer')
 const verifyFacebookToken = async (accessToken, userId) => {
   try {
 
@@ -168,6 +167,7 @@ router.post('/register', async (req, res) => {
     })
 
     await newUser.save()
+    sendMail(newUser.email)
 
     return res.json({
       _id: newUser._id,
