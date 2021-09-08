@@ -3,6 +3,7 @@ const User = require('../models/User')
 const auth = async (req, res, next) => {
   try {
     const token = req.header('x-auth-token')
+    console.log(token)
     if (!token) {
       return res.status(401).json({ error: "NO_AUTH_TOKEN" })
     }

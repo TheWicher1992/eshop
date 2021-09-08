@@ -4,20 +4,25 @@ import { Link } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import { login, loginFacebook, loginGoogle } from "../actions/loginActions";
+import useQuery from "../utils/useQuery";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [oAuthDialogue, setOAuthDialogue] = useState(false);
 
+  const query = useQuery()
   const dispatch = useDispatch();
   const { loading, isAuthenticated, error } = useSelector(
     (state) => state.auth
   );
 
   useEffect(() => {
-    if (isAuthenticated) history.push("/");
-  }, [isAuthenticated, loading, history]);
+
+    const redirect = query.get('redirect')
+
+    if (isAuthenticated) history.push(redirect ? `/${redirect}` : '/');
+  }, [isAuthenticated, loading, history, query]);
 
   const loginHandler = () => {
     dispatch(login(email, password));

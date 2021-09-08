@@ -10,10 +10,79 @@ import {
   LOGIN_FACEBOOK_REQUEST,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
-  REGISTER_REQUEST
+  REGISTER_REQUEST,
+  GET_PROFILE_FAIL,
+  GET_PROFILE_SUCCESS,
+  GET_PROFILE_REQUEST,
+  UPDATE_PROFILE_FAIL,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_REQUEST,
+
 } from './types/loginTypes'
 import axios from 'axios'
 
+export const updateProfile = (name, email, password) => async dispatch => {
+  try {
+    dispatch({
+      type: UPDATE_PROFILE_REQUEST
+    })
+
+    const config = {
+      headers: {
+        'x-auth-token': JSON.parse(localStorage.getItem('token'))
+      }
+    }
+
+    const { data } = await axios.put('/api/auth', { name, email, password: password === '' ? null : password }, config)
+
+    dispatch({
+      type: UPDATE_PROFILE_SUCCESS,
+      payload: data
+    })
+
+  } catch (error) {
+    console.log(error)
+    dispatch({
+      type: UPDATE_PROFILE_FAIL,
+      payload: error.response &&
+        error.response.data.error ?
+        error.response.data.error :
+        error.message
+    })
+  }
+}
+
+
+export const getProfile = () => async dispatch => {
+  try {
+    dispatch({
+      type: GET_PROFILE_REQUEST
+    })
+    console.log(localStorage.getItem('token'))
+
+    const config = {
+      headers: {
+        'x-auth-token': JSON.parse(localStorage.getItem('token'))
+      }
+    }
+    const { data } = await axios.get('/api/auth', config)
+    dispatch({
+      type: GET_PROFILE_SUCCESS,
+      payload: data
+    })
+
+
+  } catch (error) {
+    console.log(error)
+    dispatch({
+      type: GET_PROFILE_FAIL,
+      payload: error.response &&
+        error.response.data.error ?
+        error.response.data.error :
+        error.message
+    })
+  }
+}
 
 export const register = (name, email, password) => async dispatch => {
   try {

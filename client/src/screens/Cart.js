@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
+import { Link } from 'react-router-dom'
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
@@ -65,9 +66,9 @@ const Cart = () => {
           </li>
           <li className="list-group-item">
             <div className="d-grid gap-2">
-              <button className="btn btn-dark" type="button">
+              <Link to="/login?redirect=shipping" className="btn btn-dark" type="button">
                 Checkout
-              </button>
+              </Link>
             </div>
           </li>
         </ul>

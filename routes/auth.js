@@ -46,7 +46,15 @@ const verifyGoogleToken = async (tokenId) => {
 
 
 router.get('/', auth, async (req, res) => {
-  return res.json(req.user)
+  try {
+    const user = await User.findById(req.user._id)
+    res.json(user)
+  } catch (error) {
+    console.log("error-->", err)
+    return res.status(500).json({
+      error: err.message
+    })
+  }
 })
 router.post("/google", async (req, res) => {
   try {
@@ -178,6 +186,34 @@ router.post('/register', async (req, res) => {
     })
   }
   catch (err) {
+    console.log("error-->", err)
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
+
+router.put('/', auth, async (req, res) => {
+  try {
+    const userId = req.user._id
+
+    await User.findOneAndUpdate(
+      { _id: userId },
+      { name: req.body.name, email: req.body.email })
+
+    const user = await User.findById(userId)
+    if (req.body.password) {
+      console.log('pass changed')
+      user.password = req.body.password
+      await user.save()
+    }
+
+
+    return res.json(user)
+
+
+  } catch (err) {
     console.log("error-->", err)
     return res.status(500).json({
       error: err.message
