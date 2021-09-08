@@ -75,7 +75,7 @@ const Product = ({ match, history }) => {
                     <div className="col">Quantity:</div>
                     <div className="col">
                       <select
-                        class="form-select"
+                        className="form-select"
                         aria-label="Default select example"
                         onChange={(e) => setQuantity(parseInt(e.target.value))}
                         value={quantity}

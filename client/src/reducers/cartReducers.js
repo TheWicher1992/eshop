@@ -21,3 +21,16 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       return state
   }
 }
+
+export const shippingAddressReducer = (state = { address: null, city: null, postal: null }, action) => {
+  switch (action.type) {
+    case types.SAVE_SHIPPING:
+      return {
+        address: action.payload.address,
+        city: action.payload.city,
+        postal: action.payload.postal
+      }
+    default:
+      return state
+  }
+}

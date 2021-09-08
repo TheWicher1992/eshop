@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import Profile from "./screens/Profile";
+import Shipping from "./screens/Shipping";
+import Payment from "./screens/Payment";
 function App() {
   return (
     <Router>
@@ -32,6 +34,8 @@ function App() {
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
         <Route exact path='/profile' component={Profile} />
+        <Route exact path='/shipping' component={Shipping} />
+        <Route exact path='/payment' component={Payment} />
       </div>
       <Footer />
     </Router>

@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { productListReducer, productDetailReducer } from './reducers/productReducers'
-import { cartReducer } from './reducers/cartReducers'
+import { cartReducer, shippingAddressReducer } from './reducers/cartReducers'
 import { authReducer, profileReducer } from './reducers/authReducers'
 
 const cartItems = localStorage.getItem('cartItems')
@@ -10,6 +10,10 @@ const cartItems = localStorage.getItem('cartItems')
 
 const user = localStorage.getItem('user')
   ? JSON.parse(localStorage.getItem('user')) : null
+
+const shippingAddress = localStorage.getItem('shippingAddress') ? JSON.parse(localStorage.getItem('shippingAddress')) : { address: null, city: null, postal: null }
+
+
 const authInitialState =
 {
   isAuthenticated: user !== null,
@@ -21,7 +25,8 @@ const initialState = {
   cart: {
     cartItems: cartItems
   },
-  auth: authInitialState
+  auth: authInitialState,
+  shippingAddress
 }
 
 const rootReducer = combineReducers({
@@ -29,7 +34,8 @@ const rootReducer = combineReducers({
   productDetail: productDetailReducer,
   cart: cartReducer,
   auth: authReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  shippingAddress: shippingAddressReducer
 })
 
 const store = createStore(

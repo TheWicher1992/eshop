@@ -1,6 +1,19 @@
 import types from "./types/cartTypes";
 import axios from "axios";
 import { toast } from "react-toastify";
+
+export const saveShippingAddress = (address, city, postal) => async (dispatch, getState) => {
+  dispatch({
+    type: types.SAVE_SHIPPING,
+    payload: {
+      address, city, postal
+    }
+  })
+
+  localStorage.setItem('shippingAddress', JSON.stringify(getState().shippingAddress))
+
+}
+
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   try {
     const { data } = await axios.get(`/api/products/${id}`)

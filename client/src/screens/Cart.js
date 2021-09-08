@@ -1,8 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../actions/cartActions";
-import { Link } from 'react-router-dom'
-const Cart = () => {
+const Cart = ({ history }) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
   const handleQuanitity = (id, qty) => {
@@ -14,8 +13,8 @@ const Cart = () => {
   return (
     <div className="row">
       <h2>Shopping Cart</h2>
-      {cartItems.length === 0 && <h1 style={{ color: "brown" }}>Your Cart is empty</h1>}
       <div className="col-8">
+        {cartItems.length === 0 && <h1 style={{ color: "brown" }}>Your Cart is empty</h1>}
         <ul className="list-group list-group-flush">
           {cartItems.map((item) => (
             <li key={item.id} className="list-group-item">
@@ -66,9 +65,9 @@ const Cart = () => {
           </li>
           <li className="list-group-item">
             <div className="d-grid gap-2">
-              <Link to="/login?redirect=shipping" className="btn btn-dark" type="button">
+              <button disabled={cartItems.length === 0} onClick={() => history.push('/login?redirect=shipping')} className="btn btn-dark" type="button">
                 Checkout
-              </Link>
+              </button>
             </div>
           </li>
         </ul>
