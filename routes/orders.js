@@ -2,6 +2,25 @@ const express = require('express')
 const router = express.Router()
 const Order = require('../models/Order')
 const auth = require('../middlewares/auth')
+
+
+router.get('/:id', auth, async (req, res) => {
+  try {
+
+    const orderId = req.params.id
+
+    const order = await Order.findById(orderId)
+
+    return res.json(order)
+
+  } catch (error) {
+    console.log("error-->", err)
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
 router.post('/', auth, async (req, res) => {
   try {
 
