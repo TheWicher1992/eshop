@@ -2,6 +2,16 @@ import types from "./types/cartTypes";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+export const savePaymentType = (paymentType) => async (dispatch, getState) => {
+  dispatch({
+    type: types.SAVE_PAYMENT,
+    payload: paymentType
+  })
+  localStorage.setItem('paymentType', JSON.stringify(getState().paymentType))
+
+}
+
+
 export const saveShippingAddress = (address, city, postal) => async (dispatch, getState) => {
   dispatch({
     type: types.SAVE_SHIPPING,

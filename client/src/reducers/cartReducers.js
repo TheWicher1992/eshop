@@ -34,3 +34,14 @@ export const shippingAddressReducer = (state = { address: null, city: null, post
       return state
   }
 }
+
+export const paymentTypeReducer = (state = { paymentType: null }, action) => {
+  switch (action.type) {
+    case types.SAVE_PAYMENT:
+      return {
+        paymentType: action.payload
+      }
+    default:
+      return state
+  }
+}
