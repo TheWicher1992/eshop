@@ -11,6 +11,7 @@ import Register from "./screens/Register";
 import Profile from "./screens/Profile";
 import Shipping from "./screens/Shipping";
 import Payment from "./screens/Payment";
+import PlaceOrder from "./screens/PlaceOrder";
 function App() {
   return (
     <Router>
@@ -36,6 +37,7 @@ function App() {
         <Route exact path='/profile' component={Profile} />
         <Route exact path='/shipping' component={Shipping} />
         <Route exact path='/payment' component={Payment} />
+        <Route exact path='/place-order' component={PlaceOrder} />
       </div>
       <Footer />
     </Router>

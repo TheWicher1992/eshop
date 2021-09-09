@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { savePaymentType } from '../actions/cartActions'
 import CheckoutSteps from '../components/CheckoutSteps'
-const Payment = () => {
+const Payment = ({ history }) => {
   const [paymentType, setPaymentType] = useState(null)
 
 
@@ -10,6 +10,7 @@ const Payment = () => {
 
   const handlePaymentType = () => {
     dispatch(savePaymentType(paymentType))
+    history.push('/place-order')
   }
 
   return (

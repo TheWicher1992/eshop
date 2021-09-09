@@ -49,7 +49,7 @@ export const authReducer = (state = initialAuthState, action) => {
 }
 
 
-export const profileReducer = (state = { loading: false, profile: null, error: null, succes: null }, action) => {
+export const profileReducer = (state = { loading: false, profile: null, error: null, success: null }, action) => {
   switch (action.type) {
     case GET_PROFILE_REQUEST:
     case UPDATE_PROFILE_REQUEST:
