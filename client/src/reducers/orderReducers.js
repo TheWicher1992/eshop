@@ -1,5 +1,30 @@
-import { PLACE_ORDER_SUCCESS, PLACE_ORDER_FAIL, PLACE_ORDER_RESET, GET_ORDER_FAIL, GET_ORDER_SUCCESS, GET_ORDER_REQUEST } from '../actions/types/orderTypes'
+import { PLACE_ORDER_SUCCESS, PLACE_ORDER_FAIL, PLACE_ORDER_RESET, GET_ORDER_FAIL, GET_ORDER_SUCCESS, GET_ORDER_REQUEST, GET_USER_ORDERS_SUCCESS, GET_USER_ORDERS_REQUEST, GET_USER_ORDERS_FAIL } from '../actions/types/orderTypes'
 
+
+
+export const userOrdersReducer = (state = { orders: [], loading: false, error: null }, action) => {
+
+  switch (action.type) {
+    case GET_USER_ORDERS_REQUEST:
+      return {
+        orders: [], loading: true, error: null
+      }
+
+    case GET_USER_ORDERS_SUCCESS:
+      return {
+        orders: [...action.payload], loading: false, error: null
+      }
+
+    case GET_USER_ORDERS_FAIL:
+      return {
+        orders: [], loading: false, error: "Orders cannot be GET"
+      }
+
+    default:
+      return state
+  }
+
+}
 
 
 export const getOrderReducer = (state = { error: null, loading: false, order: { shippingAddress: {}, orderItems: [] } }, action) => {

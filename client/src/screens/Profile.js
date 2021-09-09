@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProfile, updateProfile } from "../actions/loginActions";
+import { getUserOrders } from "../actions/orderActions";
+import Spinner from '../components/Spinner'
+
 const Profile = ({ history }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const { profile, success } = useSelector((state) => state.profile);
+  const { orders, loading, error } = useSelector(state => state.userOrders)
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserOrders())
+  }, [dispatch])
 
   useEffect(() => {
     if (!isAuthenticated) history.push("/");
@@ -74,37 +82,36 @@ const Profile = ({ history }) => {
       </div>
       <div className="col-9">
         <h4 className="text-center">My Orders</h4>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Order Id</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
+        {error}
+        <Spinner loading={loading} />
+        {!loading &&
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th>Order Id</th>
+                <th>Items</th>
+                <th>Payment Status</th>
+                <th>Delivery Status</th>
+                <th>Total $</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {orders.map(order => (
+                <tr key={order._id} onClick={() => history.push(`/order/${order._id}`)}>
+                  <td>{order._id}</td>
+                  <td>{order.orderItems.map(item => <p key={item._id}>{item.qty} x {item.name}</p>)}</td>
+                  <td>{order.isPaid ? 'Paid' : 'Not Paid'}</td>
+                  <td>{order.isDelivered ? 'Delivered' : 'Not Delivered'}</td>
+                  <td>{order.totalPrice}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        }
+
       </div>
-    </div>
+    </div >
   );
 };
 

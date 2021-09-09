@@ -4,6 +4,24 @@ const Order = require('../models/Order')
 const auth = require('../middlewares/auth')
 
 
+router.get('/my-orders', auth, async (req, res) => {
+  try {
+    const userId = req.user._id
+
+    const orders = await Order.find({ user: userId }).sort({
+      updatedAt: 'desc'
+    })
+
+    return res.json(orders)
+
+  } catch (error) {
+    console.log("error-->", err)
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
 router.get('/:id', auth, async (req, res) => {
   try {
 

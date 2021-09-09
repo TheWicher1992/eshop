@@ -1,6 +1,38 @@
 import axios from 'axios'
-import { PLACE_ORDER_SUCCESS, PLACE_ORDER_FAIL, GET_ORDER_FAIL, GET_ORDER_REQUEST, GET_ORDER_SUCCESS } from './types/orderTypes'
+import { PLACE_ORDER_SUCCESS, PLACE_ORDER_FAIL, GET_ORDER_FAIL, GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_USER_ORDERS_FAIL, GET_USER_ORDERS_REQUEST, GET_USER_ORDERS_SUCCESS } from './types/orderTypes'
 import types from './types/cartTypes'
+
+
+export const getUserOrders = () => async dispatch => {
+  try {
+    dispatch({
+      type: GET_USER_ORDERS_REQUEST
+    })
+
+    const config = {
+      headers: {
+        'x-auth-token': JSON.parse(localStorage.getItem('token'))
+      }
+    }
+
+    const { data } = await axios.get('/api/orders/my-orders', config)
+    console.log(data)
+    dispatch({
+      type: GET_USER_ORDERS_SUCCESS,
+      payload: data
+    })
+
+  } catch (error) {
+    console.log(error)
+    dispatch({
+      type: GET_USER_ORDERS_FAIL,
+      payload: error.response &&
+        error.response.data.error ?
+        error.response.data.error :
+        error.message
+    })
+  }
+}
 
 
 export const getOrder = (orderId) => async dispatch => {
