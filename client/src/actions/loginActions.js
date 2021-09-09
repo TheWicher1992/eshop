@@ -40,6 +40,11 @@ export const updateProfile = (name, email, password) => async dispatch => {
       payload: data
     })
 
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: data
+    })
+
   } catch (error) {
     console.log(error)
     dispatch({

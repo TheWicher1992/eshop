@@ -12,6 +12,7 @@ import Profile from "./screens/Profile";
 import Shipping from "./screens/Shipping";
 import Payment from "./screens/Payment";
 import PlaceOrder from "./screens/PlaceOrder";
+import Order from "./screens/Order";
 function App() {
   return (
     <Router>
@@ -38,6 +39,7 @@ function App() {
         <Route exact path='/shipping' component={Shipping} />
         <Route exact path='/payment' component={Payment} />
         <Route exact path='/place-order' component={PlaceOrder} />
+        <Route exact path='/order/:id' component={Order} />
       </div>
       <Footer />
     </Router>

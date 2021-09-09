@@ -1,14 +1,27 @@
-import React from "react";
-import { useSelector } from "react-redux";
-
-const PlaceOrder = () => {
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { placeOrder } from '../actions/orderActions'
+const PlaceOrder = ({ history }) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const shippingAddress = useSelector((state) => state.shippingAddress);
   const paymentType = useSelector((state) => state.paymentType);
   const { user } = useSelector((state) => state.auth);
+  const { success, orderId } = useSelector(state => state.placeOrder)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (success) history.push(`/order/${orderId}`)
+    dispatch({ type: 'PLACE_ORDER_RESET' })
+  }, [history, success, dispatch, orderId])
+
+  const handlePlaceOrder = () => {
+    dispatch(placeOrder(cartItems, shippingAddress, paymentType.paymentType))
+  }
+
   return (
     <div className="row">
       <div className="col-8">
+        {success === false && <p className="text-danger">Order was not placed for some reason</p>}
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
             <div className="row">
@@ -85,7 +98,7 @@ const PlaceOrder = () => {
           </li>
           <li className="list-group-item">
             {cartItems.map((item) => (
-              <div className="row">
+              <div key={item.id} className="row">
                 <div className="col-8">
                   {item.qty} x {item.name} for{" "}
                 </div>
@@ -119,6 +132,7 @@ const PlaceOrder = () => {
                 disabled={cartItems.length === 0}
                 className="btn btn-dark"
                 type="button"
+                onClick={handlePlaceOrder}
               >
                 Place Order
               </button>

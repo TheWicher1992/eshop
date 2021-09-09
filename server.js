@@ -14,6 +14,8 @@ app.use(express.json())
 
 app.use('/api/products', require('./routes/products'))
 app.use('/api/auth', require('./routes/auth'))
+app.use('/api/orders', require('./routes/orders'))
+
 app.listen(PORT, () => {
   console.log(`Server listening to port ${PORT} in ${process.env.NODE_ENV} mode`)
 })

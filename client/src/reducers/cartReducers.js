@@ -17,6 +17,9 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       return {
         cartItems: state.cartItems.filter(item => item.id !== itemId)
       }
+    case types.CLEAR_CART:
+      localStorage.setItem('cartItems', JSON.stringify([]))
+      return { cartItems: [] }
     default:
       return state
   }
