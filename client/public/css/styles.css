@@ -19,3 +19,6 @@ a {
   font-weight: 900;
   content: " \f39e";
 }
+tr {
+  cursor: pointer;
+}

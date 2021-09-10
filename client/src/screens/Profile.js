@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProfile, updateProfile } from "../actions/loginActions";
 import { getUserOrders } from "../actions/orderActions";
-import Spinner from '../components/Spinner'
+import Spinner from "../components/Spinner";
 
 const Profile = ({ history }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const { profile, success } = useSelector((state) => state.profile);
-  const { orders, loading, error } = useSelector(state => state.userOrders)
+  const { orders, loading, error } = useSelector((state) => state.userOrders);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,8 +15,8 @@ const Profile = ({ history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserOrders())
-  }, [dispatch])
+    dispatch(getUserOrders());
+  }, [dispatch]);
 
   useEffect(() => {
     if (!isAuthenticated) history.push("/");
@@ -28,16 +28,14 @@ const Profile = ({ history }) => {
   }, [history, isAuthenticated, profile, dispatch]);
 
   const handleUpdateProfile = () => {
-    dispatch(updateProfile(name, email, password))
-  }
+    dispatch(updateProfile(name, email, password));
+  };
 
   return (
     <div className="row mt-5">
       <div className="col-3 text-center">
         <h4 className="text-center">Update Profile</h4>
-        {
-          success && <span className="text-success">Profile updated</span>
-        }
+        {success && <span className="text-success">Profile updated</span>}
         <form id="login-form" className="mt-5">
           <div className="mb-3">
             <input
@@ -84,34 +82,69 @@ const Profile = ({ history }) => {
         <h4 className="text-center">My Orders</h4>
         {error}
         <Spinner loading={loading} />
-        {!loading &&
-          <table className="table table-hover">
+        {!loading && (
+          <table
+            style={{ width: "100%" }}
+            className="table table-striped text-center table-hover"
+          >
+            <col style={{ width: "30%" }} />
+            <col style={{ width: "40%" }} />
+            <col style={{ width: "10%" }} />
+            <col style={{ width: "10%" }} />
+            <col style={{ width: "10%" }} />
             <thead>
               <tr>
                 <th>Order Id</th>
-                <th>Items</th>
+                <th style={{ width: 50 }}>Items</th>
+                <th>Total $</th>
                 <th>Payment Status</th>
                 <th>Delivery Status</th>
-                <th>Total $</th>
               </tr>
             </thead>
             <tbody>
-
-              {orders.map(order => (
-                <tr key={order._id} onClick={() => history.push(`/order/${order._id}`)}>
-                  <td>{order._id}</td>
-                  <td>{order.orderItems.map(item => <p key={item._id}>{item.qty} x {item.name}</p>)}</td>
-                  <td>{order.isPaid ? 'Paid' : 'Not Paid'}</td>
-                  <td>{order.isDelivered ? 'Delivered' : 'Not Delivered'}</td>
+              {orders.map((order) => (
+                <tr
+                  key={order._id}
+                  onClick={() => history.push(`/order/${order._id}`)}
+                >
+                  <td className="text-break">{order._id}</td>
+                  <td>
+                    {order.orderItems.map((item) => (
+                      <p className="text-decoration-underline" key={item._id}>
+                        {item.qty} x {item.name}
+                      </p>
+                    ))}
+                  </td>
                   <td>{order.totalPrice}</td>
+                  <td>
+                    {order.isPaid ? (
+                      <p className="text-success">
+                        <i class="fas fa-2x fa-check"></i>
+                      </p>
+                    ) : (
+                      <p className="text-danger">
+                        <i class="fas fa-2x fa-times"></i>
+                      </p>
+                    )}
+                  </td>
+                  <td>
+                    {order.isDelivered ? (
+                      <p className="text-success">
+                        <i class="fas fa-2x fa-check"></i>
+                      </p>
+                    ) : (
+                      <p className="text-danger">
+                        <i class="fas fa-2x fa-times"></i>
+                      </p>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        }
-
+        )}
       </div>
-    </div >
+    </div>
   );
 };
 

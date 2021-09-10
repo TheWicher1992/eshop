@@ -12,7 +12,7 @@ const Product = ({ product }) => {
         />
       </Link>
       <div className="card-body">
-        <Link className="link-secondary" to={`/product/${product._id}`}>
+        <Link className="link-primary" to={`/product/${product._id}`}>
           <div className="card-title">
             <strong>{product.name}</strong>
           </div>
