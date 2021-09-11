@@ -130,6 +130,7 @@ export const loginGoogle = (googleData) => async dispatch => {
     dispatch({
       type: LOGIN_GOOGLE_REQUEST
     })
+    console.log('google ')
     const config = {
       headers: {
         'Content-Type': 'application/json'

@@ -117,7 +117,7 @@ const Order = ({ match, history }) => {
                 <div className="col-8">Total:</div>
                 <div className="col-4">
                   <strong>
-                    ${order.orderItems.reduce((a, i) => a + i.price * i.qty, 0) + 100}
+                    ${(order.orderItems.reduce((a, i) => a + i.price * i.qty, 0) + 100).toFixed(2)}
                   </strong>
                 </div>
               </div>

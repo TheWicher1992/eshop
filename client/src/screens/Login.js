@@ -32,6 +32,10 @@ const Login = ({ history }) => {
     setOAuthDialogue(false);
   };
 
+  const onFailureGoogle = (googleData) => {
+    console.log(googleData)
+  }
+
   const loginWithFacebook = async (facebookData) => {
     dispatch(loginFacebook(facebookData));
     setOAuthDialogue(false);
@@ -97,7 +101,7 @@ const Login = ({ history }) => {
                   </button>
                 )}
                 onSuccess={loginWithGoogle}
-                onFailure={loginWithGoogle}
+                onFailure={onFailureGoogle}
                 cookiePolicy={"single_host_origin"}
               />
               {/* <FacebookLogin
