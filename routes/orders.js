@@ -39,6 +39,19 @@ router.get('/:id', auth, async (req, res) => {
   }
 })
 
+
+router.post('/payment/:id', async (req, res) => {
+  try {
+    await Order.findOneAndUpdate({ _id: req.params.id }, { isPaid: true })
+    res.end()
+  } catch (err) {
+    console.log("error-->", err)
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
 router.post('/', auth, async (req, res) => {
   try {
 

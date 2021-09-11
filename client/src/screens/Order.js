@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getOrder } from '../actions/orderActions'
-
-const Order = ({ match }) => {
+import axios from 'axios'
+const Order = ({ match, history }) => {
 
   const { loading, error, order } = useSelector(state => state.getOrder)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getOrder(match.params.id))
   }, [match, dispatch])
+
+  const payOrder = (id) => {
+    axios.post(`/api/orders/payment/${id}`).then(() => history.push(`/order/${match.params.id}`)).catch(err => console.log(err))
+  }
 
   return (
     <>
@@ -60,7 +64,7 @@ const Order = ({ match }) => {
                 )}
                 <ul className="list-group list-group-flush">
                   {order.orderItems.map((item) => (
-                    <li key={item.id} className="list-group-item">
+                    <li key={item.name} className="list-group-item">
                       <div className="row">
                         <div className="col-2">
                           <img className="img-fluid" src={item.image} alt="" />
@@ -90,7 +94,7 @@ const Order = ({ match }) => {
             </li>
             <li className="list-group-item">
               {order.orderItems.map((item) => (
-                <div key={item.id} className="row">
+                <div key={item.name} className="row">
                   <div className="col-8">
                     {item.qty} x {item.name} for{" "}
                   </div>
@@ -124,6 +128,7 @@ const Order = ({ match }) => {
                   disabled={order.orderItems.length === 0}
                   className="btn btn-dark"
                   type="button"
+                  onClick={() => payOrder(order._id)}
                 >
                   Pay Now
                 </button>
