@@ -4,15 +4,48 @@ const Order = require('../models/Order')
 const auth = require('../middlewares/auth')
 
 
+router.get('/stats', async (req, res) => {
+  try {
+    const undeliveredOrders = await Order.countDocuments({ isDelivered: false })
+    const unpaidOrders = await Order.countDocuments({ isPaid: false })
+    const last24HoursOrders = await Order.countDocuments({
+      createdAt: { $gt: new Date(Date.now() - 24 * 60 * 60 * 1000) }
+    })
+
+    return res.json({
+      undeliveredOrders,
+      unpaidOrders,
+      last24HoursOrders
+    })
+  } catch (error) {
+    console.log("error-->", err)
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
 
 router.get('/', async (req, res) => {
   try {
     const limit = req.query.limit ? parseInt(req.query.limit) : 10
-    const sort = req.query.sort ? req.query.sort : 'updatedAt'
-    console.log(limit, sort)
-    const orders = await Order.find().sort({ [sort]: 'desc' }).limit(limit)
-    return res.json(orders)
-  } catch (error) {
+    const sort = req.query.sort ? req.query.sort : 'createdAt'
+    const page = req.query.page ? parseInt(req.query.page) - 1 : 0
+    const orders = await Order
+      .find()
+      .sort({ [sort]: 'desc' })
+      .skip(page * limit)
+      .limit(limit)
+
+
+    const totalOrders = await Order.countDocuments()
+    const totalPages = Math.floor(totalOrders / limit) + 1
+    const orderInfo = {
+      orders,
+      totalOrders,
+      totalPages
+    }
+    return res.json(orderInfo)
+  } catch (err) {
     console.log("error-->", err)
     return res.status(500).json({
       error: err.message

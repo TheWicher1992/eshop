@@ -1,11 +1,13 @@
 import React from 'react'
-
+import moment from 'moment'
+import { Link } from 'react-router-dom'
 const OrdersTable = ({ orders }) => {
   return (
     <div className="table-responsive">
       <table className="table m-0">
         <thead>
           <tr>
+            <th>Date</th>
             <th>Order ID</th>
             <th>Items</th>
             <th>Delivery Status</th>
@@ -17,8 +19,9 @@ const OrdersTable = ({ orders }) => {
           {
             orders.map(order => (
               <tr key={order._id}>
+                <td className='small'>{moment(order.createdAt).format("MMMM Do YYYY, h:mm:ss a")}</td>
                 <td>
-                  <a href="#">{order._id}</a>
+                  <Link to='' className='small'>{order._id}</Link>
                 </td>
                 <td>
                   {
