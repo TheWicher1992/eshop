@@ -103,7 +103,7 @@ const PlaceOrder = ({ history }) => {
                   {item.qty} x {item.name} for{" "}
                 </div>
                 <div className="col-4">
-                  <strong>${item.price * item.qty}</strong>
+                  <strong>${(item.price * item.qty).toFixed(2)}</strong>
                 </div>
               </div>
             ))}
@@ -121,7 +121,7 @@ const PlaceOrder = ({ history }) => {
               <div className="col-8">Total:</div>
               <div className="col-4">
                 <strong>
-                  ${cartItems.reduce((a, i) => a + i.price * i.qty, 0) + 100}
+                  ${(cartItems.reduce((a, i) => a + i.price * i.qty, 0) + 100).toFixed(2)}
                 </strong>
               </div>
             </div>

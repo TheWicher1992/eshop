@@ -4,6 +4,23 @@ const Order = require('../models/Order')
 const auth = require('../middlewares/auth')
 
 
+
+router.get('/', async (req, res) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit) : 10
+    const sort = req.query.sort ? req.query.sort : 'updatedAt'
+    console.log(limit, sort)
+    const orders = await Order.find().sort({ [sort]: 'desc' }).limit(limit)
+    return res.json(orders)
+  } catch (error) {
+    console.log("error-->", err)
+    return res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
+
 router.get('/my-orders', auth, async (req, res) => {
   try {
     const userId = req.user._id

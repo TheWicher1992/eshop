@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Preloader from "./components/Preloader";
 import Dashboard from "./screens/Dashboard";
+import Orders from "./screens/Orders";
 const App = () => {
   return (
     <Router>
@@ -13,6 +14,8 @@ const App = () => {
         <Sidebar />
         <div className="content-wrapper">
           <Route exact path='/' component={Dashboard} />
+          <Route exact path='/orders' component={Orders} />
+
         </div>
       </div>
     </Router>

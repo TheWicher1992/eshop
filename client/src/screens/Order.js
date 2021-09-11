@@ -99,7 +99,7 @@ const Order = ({ match, history }) => {
                     {item.qty} x {item.name} for{" "}
                   </div>
                   <div className="col-4">
-                    <strong>${item.price * item.qty}</strong>
+                    <strong>${(item.price * item.qty).toFixed(2)}</strong>
                   </div>
                 </div>
               ))}

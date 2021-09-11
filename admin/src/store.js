@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { dashboardLatestOrdersReducer, dashboardStatsReducer, dashboardRecentProductsReducer } from './reducers/dashboardReducers'
+import { getOrdersReducer } from './reducers/orderReducers'
 
 
 const initialState = {}
@@ -9,8 +10,8 @@ const initialState = {}
 const rootReducer = combineReducers({
   dashboardStats: dashboardStatsReducer,
   dashboardLatestOrders: dashboardLatestOrdersReducer,
-  dashboardRecentProducts: dashboardRecentProductsReducer
-
+  dashboardRecentProducts: dashboardRecentProductsReducer,
+  orders: getOrdersReducer
 })
 
 const store = createStore(

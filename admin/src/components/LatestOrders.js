@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { getLatestOrders } from '../actions/dashboardActions'
+import OrdersTable from './tables/OrdersTable'
 const LatestOrders = () => {
   const { orders } = useSelector(state => state.dashboardLatestOrders)
   const dispatch = useDispatch()
@@ -30,80 +32,16 @@ const LatestOrders = () => {
       </div>
       {/* /.card-header */}
       <div className="card-body p-0">
-        <div className="table-responsive">
-          <table className="table m-0">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Items</th>
-                <th>Delivery Status</th>
-                <th>Payment Status</th>
-                <th>Total ($)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                orders.map(order => (
-                  <tr key={order._id}>
-                    <td>
-                      <a href="#">{order._id}</a>
-                    </td>
-                    <td>
-                      {
-                        order.orderItems.map(item => (
-                          <p key={item.name}>{item.qty} x {item.name}</p>
-                        ))
-                      }
-                    </td>
-                    <td>
-                      {
-                        order.isDelivered ?
-                          <span className="badge badge-success">
-                            Delivered
-                          </span> :
-                          <span className="badge badge-danger">
-                            Not Delivered
-                          </span>
-                      }
-
-                    </td>
-                    <td>
-                      {
-                        order.isPaid ?
-                          <span className="badge badge-success">
-                            Paid
-                          </span> :
-                          <span className="badge badge-danger">
-                            Not Paid
-                          </span>
-                      }
-
-                    </td>
-                    <td>
-                      <div
-                        className="sparkbar"
-                        data-color="#00a65a"
-                        data-height={20}
-                      >
-                        {order.totalPrice.toFixed(2)}
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
-        {/* /.table-responsive */}
+        <OrdersTable orders={orders} />
       </div>
       {/* /.card-body */}
       <div className="card-footer clearfix">
-        <a
-          href="#"
+        <Link
+          to="/orders"
           className="btn btn-sm btn-info btn-secondary float-right"
         >
           View All Orders
-        </a>
+        </Link>
       </div>
       {/* /.card-footer */}
     </div>
