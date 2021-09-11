@@ -7,7 +7,7 @@ const Sidebar = () => {
       {/* Brand Logo */}
       <a href="index3.html" className="brand-link">
         <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
-        <span className="brand-text font-weight-light">AdminLTE 3</span>
+        <span className="brand-text font-weight-light">Eshop AdminLTE</span>
       </a>
       {/* Sidebar */}
       <div className="sidebar">
@@ -36,14 +36,103 @@ const Sidebar = () => {
           <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             {/* Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library */}
-            <li className="nav-item">
+            <li class="nav-item">
               <a href="#" className="nav-link active">
-                <i className="nav-icon fas fa-tachometer-alt" />
+                <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
                 </p>
               </a>
             </li>
+            <li class="nav-item menu-open">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-box"></i>
+                <p>
+                  Products
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>View All</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Inventory</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item ">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Users
+                </p>
+              </a>
+            </li>
+            <li class="nav-item menu-open">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                  Orders
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>View All</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Orders</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            {/* <li class="nav-item menu-open">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="./index.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Dashboard v1</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="./index2.html" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Dashboard v2</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="./index3.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Dashboard v3</p>
+                  </a>
+                </li>
+              </ul>
+            </li> */}
             {/* <li className="nav-item">
               <a href="pages/widgets.html" className="nav-link">
                 <i className="nav-icon fas fa-th" />
