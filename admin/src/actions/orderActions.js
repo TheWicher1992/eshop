@@ -1,4 +1,5 @@
 import axios from 'axios'
+import axiosCancel from '../utils/axiosCancelToken'
 import { GET_ORDER_FAIL, GET_ORDER_REQUEST, GET_ORDER_STATS_FAIL, GET_ORDER_STATS_REQUEST, GET_ORDER_STATS_SUCCESS, GET_ORDER_SUCCESS } from './types'
 
 export const getOrderStats = () => async dispatch => {
@@ -27,14 +28,23 @@ export const getOrderStats = () => async dispatch => {
   }
 }
 
-export const getOrders = (page = 1, limit = 10, sort = 'createdAt') => async dispatch => {
+let cancelGetOrders;
+export const getOrders = ({ query = null, page = 1, limit = 20, sort = 'createdAt' } = {}) => async dispatch => {
   try {
-
+    cancelGetOrders && cancelGetOrders.cancel()
     dispatch({
       type: GET_ORDER_REQUEST
     })
 
-    const { data } = await axios.get(`/api/orders?page=${page}&limit=${limit}&sort=${sort}`)
+
+
+    let urlQueryString = `page=${page}&limit=${limit}&sort=${sort}` + (query !== null ? `&query=${query.trim().split(' ').join(',')}` : '')
+    console.log(urlQueryString)
+    cancelGetOrders = axios.CancelToken.source()
+    const { data } = await axios.get(`/api/orders?${urlQueryString}`, {
+      cancelToken: cancelGetOrders.token
+    })
+
 
     dispatch({
       type: GET_ORDER_SUCCESS,
@@ -42,13 +52,15 @@ export const getOrders = (page = 1, limit = 10, sort = 'createdAt') => async dis
     })
 
   } catch (err) {
-    console.log(err)
-    dispatch({
-      type: GET_ORDER_FAIL,
-      payload: err.response &&
-        err.response.data.error ?
-        err.response.data.error :
-        err.message
-    })
+    if (!axios.isCancel(err)) {
+      console.log(err)
+      dispatch({
+        type: GET_ORDER_FAIL,
+        payload: err.response &&
+          err.response.data.error ?
+          err.response.data.error :
+          err.message
+      })
+    }
   }
 }

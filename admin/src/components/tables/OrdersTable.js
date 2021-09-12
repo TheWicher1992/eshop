@@ -66,6 +66,14 @@ const OrdersTable = ({ orders }) => {
               </tr>
             ))
           }
+          <tr>
+            <th>Date</th>
+            <th>Order ID</th>
+            <th>Items</th>
+            <th>Delivery Status</th>
+            <th>Payment Status</th>
+            <th>Total ($)</th>
+          </tr>
         </tbody>
       </table>
     </div>

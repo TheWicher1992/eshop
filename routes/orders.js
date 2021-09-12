@@ -25,19 +25,35 @@ router.get('/stats', async (req, res) => {
   }
 })
 
+const delay = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve()
+    }, 1000);
+  })
+}
+
 router.get('/', async (req, res) => {
   try {
     const limit = req.query.limit ? parseInt(req.query.limit) : 10
     const sort = req.query.sort ? req.query.sort : 'createdAt'
     const page = req.query.page ? parseInt(req.query.page) - 1 : 0
+    const filters = {}
+
+    if (req.query.query) filters['orderItems.name'] = {
+      $in: req.query.query.split(',').map(q => new RegExp(q, 'i')
+      )
+    }
+
+    console.log(filters)
     const orders = await Order
-      .find()
+      .find(filters)
       .sort({ [sort]: 'desc' })
       .skip(page * limit)
       .limit(limit)
 
 
-    const totalOrders = await Order.countDocuments()
+    const totalOrders = await Order.countDocuments(filters)
     const totalPages = Math.floor(totalOrders / limit) + 1
     const orderInfo = {
       orders,
