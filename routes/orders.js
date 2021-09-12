@@ -40,9 +40,11 @@ router.get('/', async (req, res) => {
     const page = req.query.page ? parseInt(req.query.page) - 1 : 0
     const filters = {}
 
-    if (req.query.query) filters['orderItems.name'] = {
-      $in: req.query.query.split(',').map(q => new RegExp(q, 'i')
-      )
+    if (req.query.query) {
+      filters['orderItems.name'] = {
+        $in: req.query.query.split(',').map(q => new RegExp(q, 'i')
+        )
+      }
     }
 
     console.log(filters)
@@ -54,7 +56,7 @@ router.get('/', async (req, res) => {
 
 
     const totalOrders = await Order.countDocuments(filters)
-    const totalPages = Math.floor(totalOrders / limit) + 1
+    const totalPages = Math.ceil(totalOrders / limit)
     const orderInfo = {
       orders,
       totalOrders,

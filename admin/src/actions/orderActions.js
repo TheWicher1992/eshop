@@ -1,5 +1,4 @@
 import axios from 'axios'
-import axiosCancel from '../utils/axiosCancelToken'
 import { GET_ORDER_FAIL, GET_ORDER_REQUEST, GET_ORDER_STATS_FAIL, GET_ORDER_STATS_REQUEST, GET_ORDER_STATS_SUCCESS, GET_ORDER_SUCCESS } from './types'
 
 export const getOrderStats = () => async dispatch => {
@@ -29,7 +28,7 @@ export const getOrderStats = () => async dispatch => {
 }
 
 let cancelGetOrders;
-export const getOrders = ({ query = null, page = 1, limit = 20, sort = 'createdAt' } = {}) => async dispatch => {
+export const getOrders = ({ query = null, page = 1, limit = 10, sort = 'createdAt' } = {}) => async dispatch => {
   try {
     cancelGetOrders && cancelGetOrders.cancel()
     dispatch({

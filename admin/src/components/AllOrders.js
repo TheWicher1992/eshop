@@ -5,6 +5,7 @@ import OrdersTable from "./tables/OrdersTable";
 import TableLoader from "./loaders/TableLoader";
 
 const AllOrders = () => {
+  //states
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState(null);
   const [toggleRefresh, setToggleRefresh] = useState(true);
@@ -12,6 +13,8 @@ const AllOrders = () => {
     (state) => state.getOrders
   );
 
+
+  //actions
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,36 +40,85 @@ const AllOrders = () => {
   };
 
   const Pagination = () => {
-    if (totalPages > 1) {
+    const PaginationArrows = ({ children }) => {
       return (
-        <ul className="pagination pagination-md m-0 float-right">
+        <ul className="pagination flex-wrap pagination-md m-0 float-right">
           <li className="page-item">
-            <button className="page-link" onClick={previousPage}>
+            <a href="#order-table-top" className="page-link" onClick={previousPage}>
               &laquo;
-            </button>
+            </a>
           </li>
-          {[...Array(totalPages).keys()].map((i) => (
-            <li key={i} className="page-item">
-              <button
-                className="page-link text-info"
-                onClick={() => clickPage(i + 1)}
-              >
-                {i + 1}
-              </button>
-            </li>
-          ))}
+          {children}
           <li className="page-item">
-            <button className="page-link" onClick={nextPage}>
+            <a href="#order-table-top" className="page-link" onClick={nextPage}>
               &raquo;
-            </button>
+            </a>
           </li>
         </ul>
-      );
+      )
+    }
+    if (totalPages > 1) {
+      return (
+        <PaginationArrows>
+          {
+            totalPages > 20 && (
+              [...Array(18).keys()].map((i) => (
+                <li key={i} className="page-item">
+                  <a
+                    href="#order-table-top"
+                    className="page-link text-info"
+                    onClick={() => clickPage(i + 1)}
+                  >
+                    {i + 1}
+                  </a>
+                </li>
+              ))
+            )
+          }
+          {
+            totalPages > 20 && (<li className="page-item">
+              <a
+                href="#order-table-top"
+                className="page-link text-info"
+              >
+                ...
+              </a>
+            </li>)
+          }
+          {
+            totalPages > 20 &&
+            <li className="page-item">
+              <a
+                href="#order-table-top"
+                className="page-link text-info"
+                onClick={() => clickPage(totalPages)}
+              >
+                {totalPages}
+              </a>
+            </li>
+          }
+          {
+            totalPages <= 20 && (
+              [...Array(totalPages).keys()].map((i) => (
+                <li key={i} className="page-item">
+                  <a
+                    href="#order-table-top"
+                    className="page-link text-info"
+                    onClick={() => clickPage(i + 1)}
+                  >
+                    {i + 1}
+                  </a>
+                </li>
+              ))
+            )
+          }
+        </PaginationArrows >
+      )
     }
     return <></>;
   };
   return (
-    <div className="card">
+    <div id="order-table-top" className="card">
       <div className="card-header border-transparent">
         <h3 className="card-title">All Orders ({totalOrders})</h3>
         <div className="card-tools">
@@ -95,8 +147,8 @@ const AllOrders = () => {
       </div>
       {/* /.card-header */}
       <div className="card-body p-0">
-        {loading && <TableLoader />}
         {!loading && <OrdersTable orders={orders} />}
+        {loading && <TableLoader />}
       </div>
       {/* /.card-body */}
       <div className="card-footer clearfix">
@@ -104,7 +156,7 @@ const AllOrders = () => {
           Page {page} of {totalPages}
         </p>
         <div
-          style={{ overflowX: "scroll", width: "80%" }}
+          style={{ width: "80%" }}
           className="row float-right"
         >
           <Pagination />
