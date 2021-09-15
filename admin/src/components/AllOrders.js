@@ -132,17 +132,12 @@ const AllOrders = () => {
                 value={query !== null ? query : ""}
                 onChange={(e) => setQuery(e.target.value)}
               />
-              <button className="btn btn-navbar" type="button">
-                <i className="fas text-light fa-search" />
+              <button onClick={refreshOrders}
+                className="btn text-light btn-navbar" type="button">
+                <i class="fas fa-sync"></i>
               </button>
             </div>
           </div>
-          <button
-            onClick={refreshOrders}
-            className="btn btn-sm btn-info btn-secondary float-right"
-          >
-            Refresh
-          </button>
         </div>
       </div>
       {/* /.card-header */}

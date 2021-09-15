@@ -25,8 +25,8 @@ const OrdersTable = ({ orders }) => {
                 </td>
                 <td>
                   {
-                    order.orderItems.map(item => (
-                      <p key={item.name}>{item.qty} x {item.name}</p>
+                    order.orderItems.map((item, key) => (
+                      <p key={`${key}_${item.name}_${item.qty}`}>{item.qty} x {item.name}</p>
                     ))
                   }
                 </td>

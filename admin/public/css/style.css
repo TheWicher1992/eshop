@@ -11,3 +11,7 @@
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px black;
 }
+
+.outline-danger {
+  border-color: red !important;
+}

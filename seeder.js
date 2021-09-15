@@ -59,14 +59,17 @@ const make10000Orders = async () => {
     const products = await Product.find()
 
     for (let i = 0; i < 1000; i++) {
-      const totalItems = Math.floor(Math.random() * 7) + 1
+      const totalItems = Math.floor(Math.random() * 3) + 1
       const orderItems = []
+      const alreadyIn = []
 
       for (let i = 0; i < totalItems; i++) {
-        let alreadyIn = []
         let item = products[Math.floor(Math.random() * products.length)]
+        // console.log(item._id)
+        // console.log(alreadyIn.includes(item._id))
         while (alreadyIn.includes(item._id)) {
           item = products[Math.floor(Math.random() * products.length)]
+          // console.log('1')
         }
         alreadyIn.push(item._id)
         orderItems.push({
