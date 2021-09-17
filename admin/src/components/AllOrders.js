@@ -134,7 +134,7 @@ const AllOrders = () => {
               />
               <button onClick={refreshOrders}
                 className="btn text-light btn-navbar" type="button">
-                <i class="fas fa-sync"></i>
+                <i className="fas fa-sync"></i>
               </button>
             </div>
           </div>
