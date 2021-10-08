@@ -37,7 +37,7 @@ const ProductList = () => {
               <li key={product._id} className="item">
                 <div className="product-img">
                   <img
-                    src={`${process.env.REACT_APP_S3_URI}${product.image}`}
+                    src={`${product.image}`}
                     alt="Product"
                     className="img-size-50"
                   />
